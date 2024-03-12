@@ -26,5 +26,5 @@ Attributes:
 
 Based on commands at https://github.com/eclipse/mosquitto/blob/master/plugins/dynamic-security/README.md
 
-## Setup and how to use Mosquitto with Dynamic Security Plugin: 
-    https://mosquitto.org/documentation/dynamic-security/
+### Setup and how to use Mosquitto with Dynamic Security Plugin: 
+    Go to: https://mosquitto.org/documentation/dynamic-security/
