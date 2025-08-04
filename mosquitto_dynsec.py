@@ -1,6 +1,7 @@
 import threading
 import paho.mqtt.client as mqtt
 import json
+import ssl
 
 
 class MosquittoDynSec:
@@ -33,7 +34,7 @@ class MosquittoDynSec:
         port (int): Network port of the MQTT broker.
     """
 
-    def __init__(self, username, password, host="localhost", port=1883):
+    def __init__(self, username, password, host="localhost", port=1883, tls=False):
         """
         Initializes a new instance of the MosquittoDynSec class.
 
@@ -46,11 +47,13 @@ class MosquittoDynSec:
             password (str): The password of the client that writes to the '$CONTROL/dynamic-security/v1' topic.
             host (str): The hostname or IP address of the MQTT broker. Defaults to "localhost".
             port (int): The network port of the MQTT server. Defaults to 1883.
-        """    
+            tls (bool): Whether to use TLS encryption. Defaults to false.
+        """
         self.username = username
         self.password = password
         self.host = host
         self.port = port
+        self.tls = tls
 
         # MQTT topics
         self.send_command_topic = "$CONTROL/dynamic-security/v1"
@@ -62,6 +65,8 @@ class MosquittoDynSec:
 
         # Set username and password
         self.client.username_pw_set(self.username, self.password)
+        if self.tls:
+            self.client.tls_set(cert_reqs=ssl.CERT_REQUIRED, tls_version=ssl.PROTOCOL_TLSv1_2)
 
         # Events and timeouts
         self.subscription_event = threading.Event()
